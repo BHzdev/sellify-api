@@ -8,7 +8,6 @@ function api_product_post($request) {
     $nome = sanitize_text_field($request['nome']);
     $preco = sanitize_text_field($request['preco']);
     $descricao = sanitize_text_field($request['descricao']);
-    $usuario_id = $user->user_login;
 
     $response = array(
       'post_author' => $user_id,
@@ -19,7 +18,7 @@ function api_product_post($request) {
         'nome' => $nome,
         'preco' => $preco,
         'descricao' => $descricao,
-        'usuario_id' => $usuario_id,
+        'usuario_id' => $user->user_login,
         'vendido' => 'false',
       ),
     );

@@ -53,7 +53,7 @@
   function register_api_product_post() {
     register_rest_route('api', '/produto', array(
       array(
-        'methods' => WP_REST_Server::EDITABLE,
+        'methods' => WP_REST_Server::CREATABLE,
         'callback' => 'api_product_post',
       ),
     ));

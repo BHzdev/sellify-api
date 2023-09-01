@@ -28,4 +28,7 @@ function get_product_id_by_slug($slug) {
 }
 
 add_action("jwt_auth_expire", "expire_token");
+add_action('rest_pre_serve_request', function() {
+  header('Access-Control-Expose-Headers: X-Total-Count');
+});
 ?>

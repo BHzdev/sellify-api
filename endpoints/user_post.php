@@ -31,12 +31,12 @@
       wp_update_user($response);
 
       // Atualizando metadados personalizados do usuário
-      update_user_meta($user_id, 'estado', $estado);
-      update_user_meta($user_id, 'cidade', $cidade);
-      update_user_meta($user_id, 'cep', $cep);
-      update_user_meta($user_id, 'bairro', $bairro);
-      update_user_meta($user_id, 'rua', $rua);
-      update_user_meta($user_id, 'numero', $numero);
+      update_user_meta($user_id, "estado", $estado);
+      update_user_meta($user_id, "cidade", $cidade);
+      update_user_meta($user_id, "cep", $cep);
+      update_user_meta($user_id, "bairro", $bairro);
+      update_user_meta($user_id, "rua", $rua);
+      update_user_meta($user_id, "numero", $numero);
     } else {
       // Se o usuário ou o email já existirem, retornar um erro
       $response = new WP_Error("email", "Email já cadastrado.", array("status" => 403));
@@ -56,5 +56,5 @@
   }
 
   // Adicionando a ação de inicialização da API REST para registrar a rota
-  add_action('rest_api_init', 'register_api_user_post');
+  add_action("rest_api_init", "register_api_user_post");
 ?>

@@ -13,16 +13,16 @@
         "id" => $user->user_login,
         "nome" => $user->display_name,
         "email" => $user->user_email,
-        "estado" => $user_meta['estado'][0],
-        "cidade" => $user_meta['cidade'][0],
-        "cep" => $user_meta['cep'][0],
-        "bairro" => $user_meta['bairro'][0],
-        "numero" => $user_meta['numero'][0],
-        "rua" => $user_meta['rua'][0],
+        "estado" => $user_meta["estado"][0],
+        "cidade" => $user_meta["cidade"][0],
+        "cep" => $user_meta["cep"][0],
+        "bairro" => $user_meta["bairro"][0],
+        "numero" => $user_meta["numero"][0],
+        "rua" => $user_meta["rua"][0],
       );
     }else {
       // Se não houver usuário logado, retornar um erro de permissão
-      $response = new WP_Error('permissao', 'Usuário não possui permissão', array("status" => 401));
+      $response = new WP_Error("permissao", "Usuário não possui permissão", array("status" => 401));
     }
     // Retornar a resposta formatada para a API
     return rest_ensure_response($response);
@@ -39,5 +39,5 @@
   }
   
   // Adicionando a ação de inicialização da API REST para registrar a rota
-  add_action('rest_api_init', 'register_api_user_get');
+  add_action("rest_api_init", "register_api_user_get");
 ?>

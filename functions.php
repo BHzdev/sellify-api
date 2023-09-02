@@ -18,17 +18,17 @@ function expire_token() {
 
 function get_product_id_by_slug($slug) {
   $query = new WP_Query(array(
-    'name' => $slug,
-    'post_type' => 'produto',
-    'numberposts' => 1,
-    'fields' => 'ids'
+    "name" => $slug,
+    "post_type" => "produto",
+    "numberposts" => 1,
+    "fields" => "ids"
   ));
   $posts = $query->get_posts();
   return array_shift($posts);
 }
 
 add_action("jwt_auth_expire", "expire_token");
-add_action('rest_pre_serve_request', function() {
-  header('Access-Control-Expose-Headers: X-Total-Count');
+add_action("rest_pre_serve_request", function() {
+  header("Access-Control-Expose-Headers: X-Total-Count");
 });
 ?>

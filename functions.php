@@ -12,6 +12,8 @@ require_once($template_directory . "/endpoints/product_post.php");
 require_once($template_directory . "/endpoints/product_get.php");
 require_once($template_directory . "/endpoints/product_delete.php");
 
+require_once($template_directory . "/endpoints/transaction_post.php");
+
 function expire_token() {
   return time() + (60 * 60 * 24);
 }

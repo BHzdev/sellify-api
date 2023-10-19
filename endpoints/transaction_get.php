@@ -1,7 +1,7 @@
 <?php
 function api_transaction_get($request) {
-  // Obtém o tipo de consulta (por padrão, 'comprador_id' é usado se nenhum tipo for especificado).
-  $tipo = sanitize_text_field($request['tipo']) ?: 'comprador_id';
+  // Obtém o tipo de consulta (por padrão, "comprador_id" é usado se nenhum tipo for especificado).
+  $tipo = sanitize_text_field($request["tipo"]) ?: "comprador_id";
 
   // Obtém o usuário atualmente autenticado no WordPress.
   $user = wp_get_current_user();
@@ -16,17 +16,17 @@ function api_transaction_get($request) {
     $meta_query = null;
     if ($tipo) {
       $meta_query = array(
-        'key' => $tipo,
-        'value' => $login,
-        'compare' => '='
+        "key" => $tipo,
+        "value" => $login,
+        "compare" => "="
       );
     }
 
     $query = array(
-      'post_type' => 'transaction', // Define o tipo de post a ser consultado.
-      'orderby' => 'date', // Ordena os resultados por data.
-      'posts_per_page' => -1, // Retorna todas as transações (sem limite de quantidade).
-      'meta_query' => array(
+      "post_type" => "transacao", // Define o tipo de post a ser consultado.
+      "orderby" => "date", // Ordena os resultados por data.
+      "posts_per_page" => -1, // Retorna todas as transações (sem limite de quantidade).
+      "meta_query" => array(
         $meta_query // Define a consulta personalizada com base no tipo e no nome de usuário.
       )
     );
@@ -42,15 +42,15 @@ function api_transaction_get($request) {
       $post_meta = get_post_meta($post_id);
 
       $response[] = array(
-        'comprador_id' => $post_meta['comprador_id'][0],
-        'vendedor_id' => $post_meta['vendedor_id'][0],
-        'endereco' => json_decode($post_meta['endereco'][0]),
-        'produto' => json_decode($post_meta['produto'][0]),
-        'data' => $value->post_date,
+        "comprador_id" => $post_meta["comprador_id"][0],
+        "vendedor_id" => $post_meta["vendedor_id"][0],
+        "endereco" => json_decode($post_meta["endereco"][0]),
+        "produto" => json_decode($post_meta["produto"][0]),
+        "data" => $value->post_date,
       );
     }
   } else {
-    $response = new WP_Error('permissao', 'Usuário não possui permissão.', array('status' => 401));
+    $response = new WP_Error("permissao", "Usuário não possui permissão.", array("status" => 401));
   }
 
   return rest_ensure_response($response);
@@ -58,15 +58,15 @@ function api_transaction_get($request) {
 
 // Registrando a rota da API
 function register_api_transaction_get() {
-  register_rest_route('api', '/transacao', array(
+  register_rest_route("api", "/transacao", array(
     array(
-      'methods' => WP_REST_Server::READABLE, 
-      'callback' => 'api_transaction_get', 
+      "methods" => WP_REST_Server::READABLE, 
+      "callback" => "api_transaction_get", 
     ),
   ));
 }
 
 // Adicionando a ação de inicialização da API REST para registrar a rota
-add_action('rest_api_init', 'register_api_transaction_get');
+add_action("rest_api_init", "register_api_transaction_get");
 
 ?>

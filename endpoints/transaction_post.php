@@ -3,11 +3,12 @@ function api_transaction_post($request) {
   // Obtém o usuário atualmente autenticado no WordPress.
   $user = wp_get_current_user();
   $user_id = $user->ID;
+  $produto_vendido = $request['produto']['vendido'] === 'false';
 
   // Verifica se o usuário está autenticado.
   if ($user_id > 0) {
     // Obtém informações dos produtos, comprador, vendedor, endereço e os converte em texto seguro.
-    $produto_slug = sanitize_text_field($request["produto"]->id);
+    $produto_slug = sanitize_text_field($request["produto"]["id"]);
     $produto_nome = sanitize_text_field($request["produto"]["nome"]);
     $comprador_id = sanitize_text_field($request["comprador_id"]);
     $vendedor_id = sanitize_text_field($request["vendedor_id"]);
@@ -35,12 +36,11 @@ function api_transaction_post($request) {
     );
 
     // Insere o novo post 'transacao' no banco de dados.
-    wp_insert_post($response);
+    $post_id = wp_insert_post($response);
   } else {
     $response = new WP_Error("permissao", "Usuário não possui permissão.", array("status" => 401));
   }
 
-  // Retorna a resposta como um objeto de resposta da API REST.
   return rest_ensure_response($response);
 }
 
